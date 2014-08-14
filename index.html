@@ -4,6 +4,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>Contacts Book</title>
 		<link rel="stylesheet" type="text/css" href="res/css/style.css" />
+		<script data-main="res/js/main" src="res/js/libraries/require.js"></script>
 	</head>
 	<body>
 		<div class="wraper">
@@ -16,74 +17,5 @@
 			</aside>
 			<main class="main-container"></main>
 		</div>
-		
-		<!-- TEMPLATES START-->
-
-		<script type="text/template" id="tpl-contacts-aside">
-			<ul class="addressList"></ul>
-			<button id="new" type="button">Add</button>
-		</script>
-		<script type="text/template" id="tpl-single-contact-aside">
-			<a href="#contact/<%- id %>" class="aside-contacts-link" data-group="<%- group %>">
-				<img alt="<%- name %>" src="res/images/noImgSm.jpg">
-				<span><%- name %></span>
-			</a>
-		</script>
-		
-		<script type="text/template" id="tpl-currnet-user">
-			<header>
-				<img class="picture" src="res/images/noImg.jpg" alt="<%- name %>">
-				<div class="name"><%- name %></div>
-			</header>
-			<div class="mail"><%- mail %></div>
-			<div class="phone"><%- phone %></div>
-			<div class="group"><%- group %></div>
-			<% if(name){ %>
-				<div class="buttonSet">
-					<button id="edit" type="button" data-id="<%- id %>">Edit</button>
-					<button id="remove" type="button" data-id="<%- id %>">Remove</button>
-				</div>
-			<% } %>
-		</script>
-
-		<script type="text/template" id="tpl-new-user">
-			<header>
-				<img alt="" src="res/images/noImg.jpg" class="picture">
-				<div class="name"><input type="text" maxlength="20" placeholder="Name" id="name" name="name" value="<%- name %>"></div>
-			</header>
-			<div class="mail"><input type="text" placeholder="name@gmail.com" id="mail" name="mail" value="<%- mail %>"></div>
-			<div class="phone"><input type="text" placeholder="+38(044)123-45-67" id="phone" name="phone" value="<%- phone %>"></div>
-			<div class="group"></div>
-			<div class="buttonSet">
-				<button id="save" type="submit">Save</button>
-				<button id="cancel" type="button">Cancel</button>
-			</div>
-		</script>
-
-		<!-- TEMPLATES END-->
-
-		<script type="text/javascript" src="res/js/libraries/jquery.js"></script>
-		<script type="text/javascript" src="res/js/libraries/underscore.js"></script>
-		<script type="text/javascript" src="res/js/libraries/backbone.js"></script>
-		
-		<script type="text/javascript" src="res/js/app.js"></script>
-		<script type="text/javascript" src="res/js/models/contacts.js"></script>
-		<script type="text/javascript" src="res/js/models/groups.js"></script>
-		<script type="text/javascript" src="res/js/collection/contacts.js"></script>
-		<script type="text/javascript" src="res/js/collection/groups.js"></script>
-		<script type="text/javascript" src="res/js/view/contacts.js"></script>
-		<script type="text/javascript" src="res/js/view/contactsAsideOne.js"></script>
-		<script type="text/javascript" src="res/js/view/asideGroups.js"></script>
-		<script type="text/javascript" src="res/js/view/asideGroupsOne.js"></script>
-		<script type="text/javascript" src="res/js/view/currentUser.js"></script>
-		<script type="text/javascript" src="res/js/view/addNewUser.js"></script>
-		<script type="text/javascript" src="res/js/router.js"></script>
-		<script type="text/javascript" src="res/js/search.js"></script>
-
-		<script>
-			$(function(){
-				ContactManager.start();
-			});
-		</script>
 	</body>
 </html>

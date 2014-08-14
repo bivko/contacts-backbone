@@ -1,11 +1,25 @@
-window.ContactManager = {
-	Models: {},
-	Collections: {},
-	Views: {},
+define([
+	'backbone',
 
-	start: function() {
-		var contactsList = new ContactManager.Collections.Contacts(),
-			groupsList = new ContactManager.Collections.Groups();
+	'./models/contacts',
+	'./models/groups',
+	
+	'./collection/contacts',
+	'./collection/groups',
+
+	'./view/addNewUser',
+	'./view/asideGroups',
+	'./view/asideContacts',
+	'./view/currentUser',
+
+	'./router',
+	'./search'
+
+],function(Backbone, modelContacts, modelGroups, collectionContacts, collectionGroups, viewAddUser, viewAsideGroups, viewAsideContacts, viewShowUser, appRouter) {
+	
+	var start = function (){
+		var contactsList = new collectionContacts(),
+			groupsList = new collectionGroups();
 
 		contactsList.fetch({
 			add: true,
@@ -17,16 +31,16 @@ window.ContactManager = {
 			data: {type: 'getAllGroups'}
 		});
 
-		var router = new ContactManager.Router(),
-			contactsView = new ContactManager.Views.Contacts({collection: contactsList}),
-			groupsView = new ContactManager.Views.Groups({collection: groupsList});
+		var router = new appRouter(),
+			contactsView = new viewAsideContacts({collection: contactsList}),
+			groupsView = new viewAsideGroups({collection: groupsList});
 
 		$('.aside-contacts-list').html(contactsView.render().$el);
 		$('.aside-filters').html(groupsView.render().$el);
 
 		router.on('route:home', function(){
-			var emptyUserView = new ContactManager.Views.CurrentUser({
-				model: new ContactManager.Models.Contacts
+			var emptyUserView = new viewShowUser({
+				model: new modelContacts
 			});
 			$('.main-container').html(emptyUserView.render().$el);
 		})
@@ -34,7 +48,7 @@ window.ContactManager = {
 		router.on('route:showCurrentContact', function(id){
 			var user = contactsList.get(id);
 			if(user){
-				var currentUserView = new ContactManager.Views.CurrentUser({model: user});
+				var currentUserView = new viewShowUser({model: user});
 				$('.main-container').html(currentUserView.render().$el);
 
 				currentUserView.on('remove:currentUser', function(){
@@ -57,7 +71,7 @@ window.ContactManager = {
 		router.on('route:edditCurrentContact', function(id){
 			var editUser = contactsList.get(id);
 			if(editUser){
-				var editUserView = new ContactManager.Views.AddNewUser({
+				var editUserView = new viewAddUser({
 					model: editUser,
 					groupsCollection: groupsList
 				});
@@ -75,8 +89,8 @@ window.ContactManager = {
 		})
 
 		router.on('route:newContact', function(){
-			var newUserView = new ContactManager.Views.AddNewUser({
-				model: new ContactManager.Models.Contacts,
+			var newUserView = new viewAddUser({
+				model: new modelContacts,
 				groupsCollection: groupsList
 			});
 			$('.main-container').html(newUserView.render().$el);
@@ -91,7 +105,7 @@ window.ContactManager = {
 						$('.aside-contacts-link:last').addClass('active');
 					},
 					error : function(err) {
-						console.log('error callback');
+						console.log('error callback', err);
 					}
 				 });
 			});
@@ -99,4 +113,8 @@ window.ContactManager = {
 
 		Backbone.history.start();
 	}
-};
+
+	return {
+		start: start
+	}
+});

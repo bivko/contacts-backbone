@@ -1,4 +1,11 @@
-ContactManager.Collections.Groups = Backbone.Collection.extend({
-	model: ContactManager.Models.Groups,
-	url: '/contacts.php'
+define([
+	'backbone',
+	'../models/groups'
+],function(Backbone, modelGroups) {
+	var collectionGroups = Backbone.Collection.extend({
+		model: modelGroups,
+		url: '/contacts.php'
+	});
+	
+	return collectionGroups;
 });

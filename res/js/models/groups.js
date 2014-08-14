@@ -1,11 +1,13 @@
-ContactManager.Models.Groups = Backbone.Model.extend({
-	defaults: {
-		id: null,
-		name: null
-	},
-	urlRoot: '/contacts.php',
+define([
+	'backbone'
+],function(Backbone) {	
+	var modelGroups = Backbone.Model.extend({
+		defaults: {
+			id: null,
+			name: null
+		},
+		urlRoot: '/contacts.php'
+	});
 
-	initialize: function() {
-
-	}
+	return modelGroups;
 });

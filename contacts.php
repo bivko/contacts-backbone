@@ -42,6 +42,7 @@
 				}
 			}
 		}
+		echo 'true';
 		$string = json_encode($json);
 		file_put_contents($contactsFile, $string);
 		exit();
